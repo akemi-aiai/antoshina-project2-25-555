@@ -1,24 +1,23 @@
+## Управление таблицами
 
-[tool.poetry]
-name = "project2-antoshina-25-555"
-version = "0.1.0"
-description = "Simple primitive database"
-authors = ["antoshina <111.email@example.com>"]
-readme = "README.md"
+### Команды:
 
-packages = [
-    { include = "src" },
-]
+- `create_table <имя> <столбец1:тип> ...` - создать таблицу
+- `list_tables` - показать все таблицы  
+- `drop_table <имя>` - удалить таблицу
+- `help` - справка
+- `exit` - выход
 
-[tool.poetry.dependencies]
-python = "^3.8"
+### Пример использования:
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+```bash
+project
 
-[tool.poetry.scripts]
-project = "src.primitive_db.main:main"
+Введите команду: create_table users name:str age:int is_active:bool
+Таблица "users" успешно создана со столбцами: ID:int, name:str, age:int, is_active:bool
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.1.0"
+Введите команду: list_tables
+- users
+
+Введите команду: drop_table users
+Таблица "users" успешно удалена.

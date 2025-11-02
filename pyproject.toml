@@ -12,6 +12,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
+prompt = "^0.4.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -22,3 +23,12 @@ project = "src.primitive_db.main:main"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.0"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+exclude = ["venv", ".venv", "dist", "__pycache__"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = []
