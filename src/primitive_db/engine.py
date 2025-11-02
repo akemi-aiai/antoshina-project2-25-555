@@ -8,7 +8,8 @@ from .core import (
 )
 from .utils import load_metadata, save_metadata, load_table_data, save_table_data
 from .parser import parse_where_condition, parse_set_clause, parse_values
-
+from .decorators import create_cacher
+select_cache = create_cacher ()
 
 def show_help():
     """Показывает справку по командам."""
@@ -121,7 +122,6 @@ def run():
                         "[where <условие>]"
                         )
                     continue
-
                 table_name = args[1]
                 where_clause = None
 
@@ -139,8 +139,13 @@ def run():
                     table_data = load_table_data(table_name)
                     metadata = load_metadata()
 
+                    cache_key = f"{table_name}:{str(where_clause)}"
+
+                    def get_selected_data():
+                        return select(table_data, where_clause)
+
                     # Выбираем данные
-                    result_data = select(table_data, where_clause)
+                    result_data = select_cache(cache_key, get_selected_data)
 
                     # Форматируем вывод
                     schema = get_table_schema(metadata, table_name)

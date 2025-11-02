@@ -16,5 +16,17 @@
     "name": "ivan",
     "age": 30,
     "is_active": true
+  },
+  {
+    "ID": 4,
+    "name": "tim",
+    "age": 45,
+    "is_active": false
+  },
+  {
+    "ID": 5,
+    "name": "mary",
+    "age": 1,
+    "is_active": true
   }
 ]

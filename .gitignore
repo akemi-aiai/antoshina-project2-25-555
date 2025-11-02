@@ -1,3 +1,27 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
 .venv/
+venv/
+.env
+
+# Distribution / build
 dist/
-*.pyc
+build/
+*.egg-info
+
+# Data and metadata
+db_meta.json
+data/
+
+# Editor / OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+

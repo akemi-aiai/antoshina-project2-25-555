@@ -1,29 +1,35 @@
 #!/usr/bin/env python3
 
 from prettytable import PrettyTable
+from .decorators import handle_db_errors, confirm_action, log_time
+from .constants import(
+    ERROR_TABLE_EXISTS, ERROR_COLUMN_FORMAT,
+    ERROR_DATA_TYPE,
+)
 
-
+@handle_db_errors
 def create_table(metadata, table_name, columns):
     """Создает таблицу в метаданных."""
     if table_name in metadata:
-        raise ValueError(f'Таблица "{table_name}" уже существует.')
+        raise ValueError(ERROR_COLUMN_FORMAT.format(table_name))
 
     validated_columns = ["ID:int"]
 
     for column in columns:
         if ':' not in column:
-            raise ValueError(f'Некорректный формат столбца: {column}')
+            raise ValueError(ERROR_TABLE_EXISTS.format(column))
 
         col_name, col_type = column.split(':', 1)
         if col_type not in ['int', 'str', 'bool']:
-            raise ValueError(f'Неподдерживаемый тип данных: {col_type}')
+            raise ValueError(ERROR_DATA_TYPE.format(col_type))
 
         validated_columns.append(f"{col_name}:{col_type}")
 
     metadata[table_name] = validated_columns
     return metadata
 
-
+@handle_db_errors
+@confirm_action("удаление таблицы")
 def drop_table(metadata, table_name):
     """Удаляет таблицу из метаданных."""
     if table_name not in metadata:
@@ -32,12 +38,12 @@ def drop_table(metadata, table_name):
     del metadata[table_name]
     return metadata
 
-
+@handle_db_errors
 def list_tables(metadata):
     """Возвращает список таблиц."""
     return list(metadata.keys())
 
-
+@handle_db_errors
 def get_table_schema(metadata, table_name):
     """Возвращает схему таблицы в виде списка кортежей (имя, тип)."""
     if table_name not in metadata:
@@ -50,7 +56,7 @@ def get_table_schema(metadata, table_name):
 
     return schema
 
-
+@handle_db_errors
 def validate_data_types(schema, values):
     """Проверяет соответствие значений типам данных схемы."""
     # Пропускаем ID (первый столбец)
@@ -65,7 +71,8 @@ def validate_data_types(schema, values):
                 f'получено: {value}'
             )
 
-
+@handle_db_errors
+@log_time
 def insert(metadata, table_name, values):
     """Добавляет новую запись в таблицу."""
     if table_name not in metadata:
@@ -89,7 +96,8 @@ def insert(metadata, table_name, values):
 
     return record
 
-
+@handle_db_errors
+@log_time
 def select(table_data, where_clause=None):
     """Выбирает записи из таблицы с опциональным условием WHERE."""
     if where_clause is None:
@@ -107,7 +115,7 @@ def select(table_data, where_clause=None):
 
     return filtered_data
 
-
+@handle_db_errors
 def update(table_data, set_clause, where_clause):
     """Обновляет записи в таблице."""
     updated_count = 0
@@ -126,7 +134,8 @@ def update(table_data, set_clause, where_clause):
 
     return table_data, updated_count
 
-
+@handle_db_errors
+@confirm_action("удаление записей")
 def delete(table_data, where_clause):
     """Удаляет записи из таблицы."""
     if where_clause is None:
@@ -149,7 +158,7 @@ def delete(table_data, where_clause):
 
     return remaining_data, deleted_count
 
-
+@handle_db_errors
 def format_table_output(data, schema):
     """Форматирует данные для вывода в виде таблицы."""
     if not data:
@@ -166,7 +175,7 @@ def format_table_output(data, schema):
 
     return table
 
-
+@handle_db_errors
 def get_table_info(metadata, table_data, table_name):
     """Возвращает информацию о таблице."""
     if table_name not in metadata:
