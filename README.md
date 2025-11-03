@@ -28,7 +28,7 @@ make project
 - Кэширование запросов
 - Логирование времени выполнения
 
-### ## Демонстрация работы проекта
+## Демонстрация работы проекта
 
 asciicast https://asciinema.org/a/Z5LxhUzXS2bDU7f25Yr30sSjv
 
@@ -44,9 +44,9 @@ asciicast https://asciinema.org/a/Z5LxhUzXS2bDU7f25Yr30sSjv
 
 ### Пример использования:
 
-create_table users name:str age:int is_active:bool
-insert into users values ("lock", 28, true)
-select from users
-update users set age = 28 where name = "lock"
-delete from users where age = 28
-info users
+1) create_table users name:str age:int is_active:bool
+2) insert into users values ("lock", 28, true)
+3) select from users
+4) update users set age = 28 where name = "lock"
+5) delete from users where age = 28
+6) info users
