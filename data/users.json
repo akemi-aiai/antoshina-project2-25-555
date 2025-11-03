@@ -1,17 +1,5 @@
 [
   {
-    "ID": 1,
-    "name": "serg",
-    "age": 28,
-    "is_active": true
-  },
-  {
-    "ID": 2,
-    "name": "anna",
-    "age": 25,
-    "is_active": false
-  },
-  {
     "ID": 3,
     "name": "ivan",
     "age": 30,
@@ -28,5 +16,17 @@
     "name": "mary",
     "age": 1,
     "is_active": true
+  },
+  {
+    "ID": 6,
+    "name": "john",
+    "age": 12,
+    "is_active": false
+  },
+  {
+    "ID": 7,
+    "name": "opш",
+    "age": 12,
+    "is_active": "еtrue"
   }
 ]
